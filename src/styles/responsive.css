@@ -1,0 +1,112 @@
+/* Responsive polish for every size, loaded after global.css.
+   Layouts that sit inside the content column use container queries (see global.css),
+   so they adapt to the room they actually have, with or without the sidebar. */
+
+/* Never let anything push the page sideways */
+html, body { max-width: 100%; overflow-x: clip; }
+img, svg, canvas, video { max-width: 100%; }
+.main > * { min-width: 0; }
+.card__text, .quote, .svc, .mini, .faq details, .field, .facts > div { min-width: 0; }
+h1, h2, h3, h4, .sub, .lead, .quote blockquote, .faq details p, .dlg dd { overflow-wrap: break-word; }
+.links li { min-width: 0; }
+.links a { min-width: 0; overflow-wrap: anywhere; }
+
+/* Method steps: keep chips inside the card and the big number out of the icon's way */
+.mini .chips { gap: 0.35rem; }
+.mini .chips li { max-width: 100%; white-space: nowrap; }
+.mini__n { font-size: clamp(2.6rem, 6cqi, 3.6rem); }
+.mini h4 { font-size: clamp(1.1rem, 2.6cqi, 1.3rem); }
+
+/* Project popup: scrolls on short screens such as a phone held sideways */
+.dlg { overflow-y: auto; overscroll-behavior: contain; }
+@media (max-height: 520px) {
+  .dlg { max-height: calc(100dvh - 1rem); }
+  .dlg__cover { display: none; }
+}
+
+/* Large screens: scale the whole layout up gently, so it doesn't look tiny on 1440p, 4K and ultrawide */
+@media (min-width: 1600px) {
+  html { font-size: clamp(16px, 0.55vw + 7.2px, 22px); }
+}
+
+/* Short desktop windows: keep the profile block compact so the nav stays visible */
+@media (min-width: 1024px) and (max-height: 720px) {
+  .side { padding-top: 1.1rem; }
+  .side__top { padding-bottom: 1rem; }
+  .side__nav a { padding-block: 0.55rem; }
+  .social { margin-top: 0.9rem; }
+}
+
+/* Tablets and phones: the dock replaces the sidebar */
+@media (max-width: 1023.98px) {
+  .main { padding-bottom: calc(7rem + env(safe-area-inset-bottom, 0px)); }
+  .round--float { top: calc(0.9rem + env(safe-area-inset-top, 0px)); right: calc(0.9rem + env(safe-area-inset-right, 0px)); }
+}
+
+/* Phones */
+@media (max-width: 520px) {
+  .form .btn { justify-self: stretch; }
+  .panel { border-radius: 24px; }
+  .tabs { padding: 0.3rem; }
+  .svc-head { margin-inline: 0; }
+  .method { border-radius: 20px; }
+}
+
+/* Small phones (360px and below) */
+@media (max-width: 380px) {
+  .sec--hero h1 { font-size: 2.05rem; }
+  .card__icon { display: none; }
+  .win__title { font-size: 0.85rem; margin-right: 0; text-align: right; }
+  .dock a:not(.dock__fab) { font-size: 0.66rem; }
+  .dock { grid-template-columns: 1fr 1fr 4.6rem 1fr 1fr; }
+  .dock__fab { width: 3.8rem; height: 3.8rem; }
+}
+
+/* Phones held sideways: the dock is short, so don't let it eat the screen */
+@media (max-height: 480px) and (max-width: 1023.98px) {
+  .dock { padding: 0.25rem; }
+  .dock a:not(.dock__fab) { padding: 0.3rem 0.2rem; }
+  .dock__fab { width: 3.2rem; height: 3.2rem; margin-top: -1rem; }
+  .sec--hero { padding-top: 3rem; }
+}
+
+/* Keep all five filter tabs on one row on the narrowest phones */
+@media (max-width: 420px) {
+  .tab { padding: 0.65rem 0.55rem; font-size: 0.88rem; }
+}
+
+/* Profile header: phones and tablets (the sidebar carries the profile from 1024px up) */
+.pbar { display: none; }
+:root { --pv: #0a66c2; }
+:root[data-theme="dark"] { --pv: #4aa8ff; }
+@media (max-width: 1023.98px) {
+  .pbar {
+    display: flex; align-items: center; gap: 0.95rem;
+    margin: env(safe-area-inset-top, 0px) 0 1.4rem; padding: 0.85rem 4rem 0.85rem 0.85rem;   /* right padding clears the floating theme button */
+    border: 1px solid var(--line); border-radius: 22px;
+    background: var(--card);
+  }
+  .pbar__avatar {
+    flex: none; width: 4rem; height: 4rem;
+    border-radius: 50%; object-fit: cover;
+    box-shadow: 0 0 0 2px var(--line-2);
+  }
+  .pbar__text { min-width: 0; display: grid; gap: 0.1rem; }
+  .pbar__text p { margin: 0; }
+  .pbar__name { display: flex; align-items: center; gap: 0.35rem; font-size: clamp(1.1rem, 4.6vw, 1.35rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+  .pbar__name span { min-width: 0; overflow-wrap: anywhere; }
+  .pbar__meta { color: var(--muted); font-size: 0.92rem; line-height: 1.35; overflow-wrap: anywhere; }
+  .pbar__views { color: var(--pv); font-size: 0.92rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .sec--hero { padding-top: 0.25rem; }
+}
+@media (min-width: 640px) and (max-width: 1023.98px) {   /* tablets */
+  .pbar { gap: 1.2rem; padding: 1.1rem 5rem 1.1rem 1.1rem; }
+  .pbar__avatar { width: 5rem; height: 5rem; }
+  .pbar__name { font-size: 1.6rem; }
+  .pbar__meta, .pbar__views { font-size: 1rem; }
+}
+@media (max-width: 380px) {   /* small phones */
+  .pbar { gap: 0.7rem; padding: 0.7rem 3.6rem 0.7rem 0.7rem; }
+  .pbar__avatar { width: 3.3rem; height: 3.3rem; }
+  .pbar__meta, .pbar__views { font-size: 0.82rem; }
+}
